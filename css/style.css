@@ -1,0 +1,10 @@
+body{
+    background-color: #f8f9d2;
+    background-image: linear-Gradient(315deg, #f8f9d2 0%, #e8dbfc, 100% );
+}
+.center-aline{
+    text-align: center;
+    font-weight: 600;
+    font-family: poppins;
+    padding-bottom: 10px;
+}
