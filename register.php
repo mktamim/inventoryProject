@@ -1,60 +1,83 @@
 <?php
+    include 'auth/connection.php';
+    $conn= connect();
+    $m='';
+    if(isset($_POST['submit'])){
+        $name= $_POST['name'];
+        $uName= $_POST['uname'];
+        $email= $_POST['email']?$_POST['email']:'';
+        $pass= $_POST['pass'];
+        $rPass= $_POST['r_pass'];
+        if($pass===$rPass){
+            $sq= "INSERT INTO user_info(name, u_name, email, password) VALUES('$name', '$uName', '$email', '$pass')";
+            if($conn->query($sq)===true){
+                header('Location: login.php');
+            }
+            else{
+                $m='Connection not established!';
+            }
+        }
+        else {
+            $m= "Passwords don't match!";
+        }
+    }
 
 ?>
 
 <html>
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registation Form</title>
-    
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <head>
+        <title>Registration Form </title>
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-
-    <link type="text/css" rel="stylesheet" href="css/style.css">
-    <link type="text/css" rel="stylesheet" href="css/register.css">
-
-</head>
-
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <link type="text/css" rel="stylesheet" href="css/style.css">
+        <link type="text/css" rel="stylesheet" href="css/register.css">
+    </head>
     <body>
-        <form method="POST" action="login.php" enctype="multipart/form-data">
-            <div class="container">
-                <h1>Registration Form</h1>
+        <form method="POST" action="register.php">
+            <div class="container reg">
+
+                <span><?php if($m!='') echo $m; ?></span>
+                <h1> Registration form</h1>
                 <hr>
                 <div>
-                    <label><span>*</span> Name</label>
+                    <label>Your Name<span>*</span></label>
                     <input name="name" id="name" type="text" placeholder="Enter Your Name" required>
                 </div>
                 <div>
-                    <label><span>*</span>Your Username</label>
-                    <input name="uname" id="uname" type="text" placeholder="Enter Your Username" required>
+                    <label>Your Userame<span>*</span></label>
+                    <input name="uname" id="uname" type="text" placeholder="Enter Your Userame" onchange="checkUsername(this.value); checkUser(this.value);" required>
+                    <small id="checktext"></small>
+                    <small id="checkuser"></small>
                 </div>
                 <div>
                     <label>Your Email</label>
-                    <input name="email" id="email" type="email" placeholder="Enter Your Email">
+                    <input name="email" id="email" type="text" placeholder="Enter Your Email">
                 </div>
                 <div>
-                    <label><span>*</span>Password</label>
+                    <label>Password<span>*</span></label>
                     <input name="pass" id="pass" type="password" placeholder="Enter Your Password" required>
                 </div>
                 <div>
-                    <label><span>*</span>Repeat Password</label>
-                    <input name="r-pass" id="rpass" type="password" placeholder="Confirm Your Password" required>
+                    <label>Repeat Password<span>*</span></label>
+                    <input name="r_pass" id="rpass" type="password" placeholder="Confirm your password" required>
                 </div>
-                <div>
-                    <p><span>***</span> Creating an account You agree to Our trms & Privacy </p>
+                <div style="text-align: center">
+                    <p><span>***</span>By creating an account you agree to our Terms & Conditions.</p>
                 </div>
-                <div class="submit">
-                    <input  type="submit" class="btn btn-success" value="Submit">
+                <div style="text-align: center; padding: 20px;">
+                    <input type="submit" class="btn btn-success" value="Submit" name="submit">
                 </div>
-                <div>
-                    <p>Allready have an accont? <a href="login.php">Sing in</a></p>
+
+                <div style="text-align: center">
+                    <p>Already have an account? <a href="login.php">Sign in</a></p>
                 </div>
             </div>
         </form>
     </body>
+    
 </html>
+
+
