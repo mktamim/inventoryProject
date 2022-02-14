@@ -63,7 +63,7 @@
                 </div>
             </div>
         </form>
-        <script src="https://kit.fontawesome.com/c0078485ae.js" crossorigin="anonymous"></script>
+        <script src="https://kit.fontawesome.com/c0078485ae.js" crossorigin="anonymous"></script> 
     </body>
 </html>
 <script>
